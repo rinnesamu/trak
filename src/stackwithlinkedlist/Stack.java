@@ -1,5 +1,6 @@
 package stackwithlinkedlist;
 
+import java.util.Iterator;
 import java.util.LinkedList;
 
 public class Stack {
@@ -29,13 +30,11 @@ public class Stack {
 	
 	// prints stack elements
 	public void printItems() {
-		if (list.size() != 0) {
-			for (int i = list.size()-1; i >= 0; i--) {
-				System.out.println(list.get(i).getData());
-			}
-		}else{
-			System.out.println("Pino on tyhjä!");
-		}
+		ListItem item;
+		for (Iterator i = list.descendingIterator(); i.hasNext();) {
+			item = (ListItem)i.next();
+	        System.out.println(item.getData());
+	      }
 	}
 	
 	public int getSize() {
