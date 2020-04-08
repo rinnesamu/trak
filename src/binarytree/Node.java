@@ -38,6 +38,9 @@ public class Node {
     public void setRight(BinaryTree tree) {
         right = tree;
     }
+    public Node getNode() {
+    	return this;
+    }
 
 
 }
