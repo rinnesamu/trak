@@ -39,7 +39,7 @@ public class Menu {
                         case '2':
                         		Node deleted = search.deleteMin();
                                 if(deleted!=null){
-                                    System.out.println("Avain " + deleted + "poistettiin");
+                                    System.out.println("Avain " + deleted.getData() + " poistettiin");
                                 }
                                 else
                                     System.out.println("Tyhjästä ei voi poistaa");

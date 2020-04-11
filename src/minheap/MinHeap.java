@@ -25,16 +25,9 @@ public class MinHeap {
 		} else {
 			int i = size + 1;
 			heap[i] = node;
-			heap[i].setParent(heap[i / 2]);
-			if (i % 2 == 0) {
-				heap[i / 2].setLeft(heap[i]);
-			} else {
-				heap[i / 2].setRight(heap[i]);
-			}
 			while (i / 2 != 0 && heap[i].getData().compareTo(heap[i / 2].getData()) < 0) {
 				swap(i);
 				i = i / 2;
-
 			}
 			size++;
 		}
@@ -42,31 +35,9 @@ public class MinHeap {
 	}
 
 	private void swap(int i) {
-
-		Node newParent;
-		System.out.println("Alkaa");
-		System.out.println(heap[i / 2].getData());
-		System.out.println(heap[i]);
-		System.out.println(heap[i].getLeft());
-		System.out.println(heap[i].getRight());
-		Node newChild = new Node(heap[i / 2].getData(), heap[i], heap[i].getLeft(), heap[i].getRight());
-		if (i % 2 == 0) {
-			newParent = new Node(heap[i].getData(), heap[i / 2].getParent(), heap[i / 2], heap[i / 2].getRight());
-		} else {
-			newParent = new Node(heap[i].getData(), heap[i / 2].getParent(), heap[i / 2].getLeft(), heap[i / 2]);
-		}
-		heap[i] = newChild;
-		heap[i / 2] = newParent;
-		if (newParent.getParent() != null) {
-			int a = i/2;
-			if (i/2 % 2 == 0) {
-				heap[a/2].setLeft(newParent);
-			}else if (heap[a/2].getRight().getData().compareTo(newChild.getData()) == 0) {
-				heap[a/2].setRight(newParent);
-			}
-		}
-		System.out.println("Swapped " + heap[i].getData() + " and " + heap[i/2].getData());
-	
+		Node temp = heap[i];
+		heap[i] = heap[i/2];
+		heap[i/2] = temp;
 	}
 
 	public Node deleteMin() {
@@ -76,25 +47,16 @@ public class MinHeap {
 			return null;
 		}
 		node = heap[FRONT];
-		System.out.print(heap[this.size/2].getLeft());
-		if (heap[this.size/2].getLeft().equals(heap[this.size])) {
-			heap[this.size/2].setLeft(null);
-		} else {
-			heap[this.size/2].setRight(null);
-		}
 		heap[FRONT] = heap[this.size];
 		heap[this.size] = null;
 		this.size--;
-		heap[FRONT].setParent(node.getParent());
-		heap[FRONT].setLeft(node.getLeft());
-		heap[FRONT].setRight(node.getRight());
 		int i = FRONT;
 		while (ready == false) {
-			if (heap[i].getLeft() != null && heap[i].getRight() != null) {
-				if (heap[i].getData().compareTo(heap[i].getLeft().getData()) <= 0
-						&& heap[i].getData().compareTo(heap[i].getRight().getData()) <= 0) {
+			if (heap[i*2] != null && heap[i*2+1] != null) {
+				if (heap[i].getData().compareTo(heap[i*2].getData()) <= 0
+						&& heap[i].getData().compareTo(heap[i*2+1].getData()) <= 0) {
 					ready = true;
-				} else if (heap[i].getLeft().getData().compareTo(heap[i].getRight().getData()) <= 0) {
+				} else if (heap[i*2].getData().compareTo(heap[i*2+1].getData()) <= 0) {
 					i = 2 * i;
 					swap(i);
 				} else {
@@ -102,8 +64,8 @@ public class MinHeap {
 					swap(i);
 				}
 
-			} else if (heap[i].getLeft() != null) {
-				if (heap[i].getData().compareTo(heap[i].getLeft().getData()) < 0) {
+			} else if (heap[i*2] != null) {
+				if (heap[i].getData().compareTo(heap[i*2].getData()) < 0) {
 					ready = true;
 				} else {
 					i = 2 * i;
@@ -123,23 +85,14 @@ public class MinHeap {
 			System.out.println(heap[i].getData());
 		}
 		System.out.println();
-		System.out.println("Jokaisen solmun vasen ja oikea lapsi:");
-		for (int i = FRONT; i <= this.size; i++) {
-			if (heap[i].getLeft() != null && heap[i].getRight() != null) {
-				System.out.println("Solmu: " + heap[i].getData() + ", Vasen lapsi: " + heap[i].getLeft().getData()
-						+ ", Oikea lapsi: " + heap[i].getRight().getData());
-			} else if (heap[i].getLeft() != null) {
-				System.out.println("Solmu: " + heap[i].getData() + ", Vasen lapsi: " + heap[i].getLeft().getData()
-						+ ", Oikea lapsi: " + heap[i].getRight());
-			} else if (heap[i].getLeft() != null) {
-				System.out.println("Solmu: " + heap[i].getData() + ", Vasen lapsi: " + heap[i].getLeft()
-						+ ", Oikea lapsi: " + heap[i].getRight().getData());
-			} else {
-				System.out.println("Solmu: " + heap[i].getData() + ", Vasen lapsi: " + heap[i].getLeft()
-						+ ", Oikea lapsi: " + heap[i].getRight());
+		System.out.println("Jokaisen solmun lapset:");
+		for (int i = 1; i < size; i++) {
+			if (heap[i*2+1] != null) {
+				System.out.println("Solmu: " + heap[i].getData() + " Vasen lapsi: " + heap[i*2].getData() + " Oikea lapsi: " + heap[i*2+1].getData());
+			}else if (heap[i*2] != null) {
+				System.out.println("Solmu: " + heap[i].getData() + " Vasen lapsi: " + heap[i*2].getData());
 			}
 		}
-		System.out.println();
 	}
 
 }
