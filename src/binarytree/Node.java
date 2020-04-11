@@ -13,10 +13,12 @@ public class Node {
     private String data;
     private BinaryTree left;
     private BinaryTree right;
+    private int height;
 
     public Node(String value) {
         data = new String(value);
         left = right = null;
+        this.height = 0;
     }
     public  Node (String value, BinaryTree left, BinaryTree right) {
         data = new String(value);
@@ -40,6 +42,14 @@ public class Node {
     }
     public Node getNode() {
     	return this;
+    }
+    
+    public int getHeight() {
+    	return this.height;
+    }
+    
+    public void setHeight(int height) {
+    	this.height = height;
     }
 
 

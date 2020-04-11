@@ -26,6 +26,7 @@ public class BinaryTree {
 	 */
 
 	public void insert(String aData) {
+		int maxHeight = -1;
 		BinaryTree bTree;
 		if (root == null) {
 			Node node = new Node(aData);
@@ -45,6 +46,17 @@ public class BinaryTree {
 				bTree.insert(aData);
 			}
 		}
+		if (root.left() != null) {
+			if  (root.left().root.getHeight() >= maxHeight) {
+				maxHeight = root.left().root.getHeight();
+			}
+		}
+		if (root.right() != null) {
+			if  (root.right().root.getHeight() >= maxHeight) {
+				maxHeight = root.right().root.getHeight();
+			}
+		}
+		root.setHeight(maxHeight + 1);
 
 	}
 
@@ -73,7 +85,7 @@ public class BinaryTree {
 
 	public void preOrder() {
 		if (root != null) {
-			System.out.println(root.getData() + ',');
+			System.out.println(root.getData() + ", korkeus " + root.getHeight());
 			if (root.left() != null) // pääseeekö vasemmalle?
 				root.left().preOrder();
 			if (root.right() != null) // pääseekö oikealle?
