@@ -21,7 +21,7 @@ public class Hash {
 				ready = true;
 			} else {
 				System.out.println(tries + ". try was " + i + ". It was already taken!");
-				i = (originalI + tries*tries) % TABLESIZE;
+				i = (originalI + tries*tries) % TABLESIZE; // Jos paikka varattu, etsitään uusi paikka
 				System.out.println("Tryin " + i + " next!");
 				
 			}
@@ -38,7 +38,7 @@ public class Hash {
 			if(hashTable[i] == key) {
 				return true;
 			}
-			i = (originalI + tries*tries) % TABLESIZE;
+			i = (originalI + tries*tries) % TABLESIZE; // Ei löytynyt oikeaa avainta, mennään suraavaan paikkaan mistä se löytyisi
 			
 		}
 		return false;
